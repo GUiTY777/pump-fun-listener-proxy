@@ -3,21 +3,26 @@ import json
 import os
 
 app = Flask(__name__)
+
 TOKENS_FILE = "tokens_raw.json"
 SEEN = set()
 
-# Загрузка токенов
+# Безопасно загружаем токены из файла
 if os.path.exists(TOKENS_FILE):
-    with open(TOKENS_FILE, "r") as f:
-        try:
-            SEEN.update(json.load(f))
-        except:
-            pass
+    try:
+        with open(TOKENS_FILE, "r") as f:
+            data = json.load(f)
+            if isinstance(data, list):
+                SEEN.update(data)
+    except Exception as e:
+        print(f"Failed to load tokens file: {e}")
 
+# Получить список всех токенов
 @app.route("/tokens")
 def get_tokens():
     return jsonify(list(SEEN))
 
+# Добавить новый токен
 @app.route("/add-token", methods=["POST"])
 def add_token():
     data = request.json
