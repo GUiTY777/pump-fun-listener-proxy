@@ -8,7 +8,7 @@ SEEN = set()
 
 def save_token(address):
     try:
-        response = requests.post("https://<URL_ТВОЕГО_PROXY>/add-token", json={"token": address})
+        response = requests.post("https://pump-fun-proxy-production-594d.up.railway.app/add-token", json={"token": address})
         print(f"Sent token to proxy: {address} — status: {response.status_code}")
     except Exception as e:
         print(f"Error sending token to proxy: {e}")
