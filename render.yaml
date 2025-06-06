@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: pump-fun-proxy
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: python proxy.py
+    autoDeploy: false
+
+  - type: worker
+    name: pump-fun-listener
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: python ws_pump_fun_listener.py
+    autoDeploy: false
